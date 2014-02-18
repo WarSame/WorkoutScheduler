@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +21,26 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.FollowWorkout"
+            android:label="@string/title_activity_follow_workout" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.SeeWorkouts"
+            android:label="@string/title_activity_see_workouts" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.EditWorkout"
+            android:label="@string/title_activity_edit_workout" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.SubmitWorkout"
+            android:label="@string/title_activity_submit_workout" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.AddExercise"
+            android:label="@string/title_activity_add_exercise" >
         </activity>
     </application>
 

@@ -8,9 +8,33 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Homepage" >
 
-    <TextView
+    <Button
+        android:id="@+id/editworkoutbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/editworkout"
+        android:onClick="editWorkout" />
+
+    <Button
+        android:id="@+id/seeworkoutbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="76dp"
+        android:text="@string/seeworkouts"
+        android:onClick="seeWorkouts" />
+
+    <Button
+        android:id="@+id/followworkoutbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editworkoutbtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
+        android:text="@string/followworkout"
+        android:onClick="followWorkout" />
 
 </RelativeLayout>

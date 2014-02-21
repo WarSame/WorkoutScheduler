@@ -18,7 +18,7 @@
     <string name="exerciseRestTime">Exercise Rest Time:</string>
     <string name="newExercise">New Exercise</string>
     <string name="submitWorkout">Submit Workout</string>
-    <string name="addExercise">Add Exercise</string>
+    <string name="editExercise">Edit Exercise</string>
     <string name="title_activity_submit_workout">SubmitWorkout</string>
     <string name="title_activity_add_exercise">AddExercise</string>
     <string name="submit">Submit</string>
@@ -29,5 +29,20 @@
     <string name="repCount">Rep Count:</string>
     <string name="repCountNoCol">Rep Count</string>
     <string name="addSet">Add Set</string>
+    <string name="title_activity_reject_workout">RejectWorkout</string>
+    <string name="workoutRejected">Workout Rejected</string>
+    <string name="title_activity_select_workout">SelectWorkout</string>
+    <string name="selectWorkout">Select Workout</string>
+    <string name="newWorkout">New Workout</string>
+    <string name="removeWorkout">Remove Workout</string>
+    <string name="title_activity_remove_workout">RemoveWorkout</string>
+    <string name="removeConfirm">Remove This Workout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="title_activity_edit_exercise">EditExercise</string>
+    <string name="repWeight">Rep Weight:</string>
+    <string name="repWeightNoCol">Rep Weight</string>
+    <string name="removeExercise">Remove Exercise</string>
+    <string name="editSets">Edit Sets</string>
 
 </resources>

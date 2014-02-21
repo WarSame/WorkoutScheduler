@@ -9,27 +9,27 @@ import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
-import com.graeme.workoutscheduler.R;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class SeeWorkouts extends Activity {
+public class SelectWorkout extends Activity {
+
+	ArrayList<Workout> workoutList = new ArrayList<Workout>();
 	ListView listView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_see_workouts);
-		
+		setContentView(R.layout.activity_select_workout);
+
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		Workout workout = null;
 		File[] files = getFilesDir().listFiles();
 		ArrayList<String> workoutNames = new ArrayList<String>();		
 		for (int i = 0; i <files.length; i++){
@@ -49,7 +49,7 @@ public class SeeWorkouts extends Activity {
 				e.printStackTrace();
 			}
 			try {
-				workout = (Workout) ois.readObject();
+				workoutList.add((Workout) ois.readObject());
 				fis.close();
 				ois.close();
 			} catch (OptionalDataException e) {
@@ -62,8 +62,8 @@ public class SeeWorkouts extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String workoutName = workout.getWorkoutName();
-			String workoutDescription = workout.getWorkoutDescription();
+			String workoutName = workoutList.get(i).getWorkoutName();
+			String workoutDescription = workoutList.get(i).getWorkoutDescription();
 			workoutNames.add(workoutName + "\n"+workoutDescription);
 		}
 		
@@ -74,11 +74,16 @@ public class SeeWorkouts extends Activity {
 		 listView.setOnItemClickListener(new OnItemClickListener() {
          public void onItemClick(AdapterView<?> parent, View view,
             int position, long id) {
+        	 //On item click, use this as a workout to be edited
+          // ListView Clicked item index
           int itemPosition     = position;
-          String  itemValue    = (String) listView.getItemAtPosition(position);
-           Toast.makeText(getApplicationContext(),
-             "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-             .show();
+     	 Workout workout = workoutList.get(itemPosition);
+     	 Intent editWorkoutIntent = new Intent(SelectWorkout.this, EditWorkout.class);
+ 		Bundle bundle = new Bundle();
+ 		bundle.putSerializable("workout", workout);
+ 		editWorkoutIntent.putExtra("type", "existing");
+ 		editWorkoutIntent.putExtras(bundle);
+ 		startActivity(editWorkoutIntent);
          }
         }); 
 	}
@@ -86,8 +91,18 @@ public class SeeWorkouts extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.see_workouts, menu);
+		getMenuInflater().inflate(R.menu.select_workout, menu);
 		return true;
+		
+	}
+	public void newWorkout(View v){
+		Intent newWorkoutIntent = new Intent(this, EditWorkout.class);
+		newWorkoutIntent.putExtra("type", "new");
+		startActivity(newWorkoutIntent);
+	}
+	public void goBack(View v){
+		Intent goBackIntent = new Intent(this, Homepage.class);
+		startActivity(goBackIntent);
 	}
 
 }

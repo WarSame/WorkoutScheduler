@@ -27,7 +27,7 @@ public class Homepage extends Activity {
     }
     
     public void editWorkout(View v){
-    	Intent editWorkoutIntent = new Intent(this, EditWorkout.class);
+    	Intent editWorkoutIntent = new Intent(this, SelectWorkout.class);
     	startActivity(editWorkoutIntent);
     }
     

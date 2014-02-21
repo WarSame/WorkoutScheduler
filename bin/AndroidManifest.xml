@@ -42,6 +42,22 @@
             android:name="com.graeme.workoutscheduler.AddExercise"
             android:label="@string/title_activity_add_exercise" >
         </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.RejectWorkout"
+            android:label="@string/title_activity_reject_workout" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.SelectWorkout"
+            android:label="@string/title_activity_select_workout" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.RemoveWorkout"
+            android:label="@string/title_activity_remove_workout" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.EditExercise"
+            android:label="@string/title_activity_edit_exercise" >
+        </activity>
     </application>
 
 </manifest>

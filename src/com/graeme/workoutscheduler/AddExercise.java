@@ -12,6 +12,8 @@ public class AddExercise extends Activity {
 	private Workout workout = new Workout();
 	private Exercise exercise = new Exercise();
 	private ArrayList<Exercise> exerciseList = workout.getExerciseList();
+	private ArrayList<Integer> exerciseRepCount = exercise.getRepCountList();
+	private ArrayList<Integer> exerciseRepWeight = exercise.getRepWeightList();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,8 +21,12 @@ public class AddExercise extends Activity {
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null){
 			Workout workoutPass = (Workout) bundle.getSerializable("workout");
+			Exercise exercisePass = (Exercise) bundle.getSerializable("exercise");
 			if (workoutPass != null){
 				workout = workoutPass;
+			}
+			if (exercisePass!=null){
+				exercise = exercisePass;
 			}
 		}
 	}
@@ -33,32 +39,56 @@ public class AddExercise extends Activity {
 	}
 	
 	public void submitExercise(View v){
-		Bundle bundle = getIntent().getExtras();
-		Intent submitExerciseIntent = new Intent(this, EditWorkout.class);
-		if (exerciseList!=null){
-			exerciseList.add(exercise);
-			workout.setExerciseList(exerciseList);
-		}
+		//If they hit the submit button put the exercise in their workout and return them.
+		Bundle bundle = new Bundle();
+		Intent submitExerciseIntent = new Intent(this, EditExercise.class);
+		exercise.setRepCountList(exerciseRepCount);
+		exercise.setRepWeightList(exerciseRepWeight);
+		
+		EditText exerciseNameText = (EditText) findViewById(R.id.editText1);
+		EditText exerciseDescriptionText = (EditText)findViewById(R.id.editText2);
+		String exerciseName = exerciseNameText.getText().toString();
+		String exerciseDescription = exerciseDescriptionText.getText().toString();
+		
+		exerciseNameText.setText(exercise.getExerciseName());
+		exerciseDescriptionText.setText(exercise.getExerciseDescription());
+		exercise.setExerciseName(exerciseName);
+		exercise.setExerciseName(exerciseDescription);
+		exerciseList = workout.getExerciseList();
+		exerciseList.add(exercise);
+		workout.setExerciseList(exerciseList);
+		
 		bundle.putSerializable("workout", workout);
 		submitExerciseIntent.putExtras(bundle);
 		startActivity(submitExerciseIntent);
 	}
 	public void returnEditWorkout(View v){
-		Intent returnEditWorkoutIntent = new Intent(this, EditWorkout.class);
+		//If they hit the back button, return without adding anything.
+		Intent returnEditWorkoutIntent = new Intent(this, EditExercise.class);
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("workout", workout);
 		returnEditWorkoutIntent.putExtras(bundle);
 		startActivity(returnEditWorkoutIntent);
 	}
 	public void addSet(View v){
-		EditText setCountText = (EditText) findViewById(R.id.editText3);
-		String setCountString = setCountText.getText().toString();
-		if (!setCountString.matches("")){
-			int setCount = Integer.parseInt(setCountString);
-			ArrayList<Integer> exerciseSetCount = exercise.getRepCountList();
-			exerciseSetCount.add(setCount);
-			setCountText.setText("0");
+		//If they hit the add set button, add that rep count to the list.
+		EditText repCountText = (EditText) findViewById(R.id.editText3);
+		EditText repWeightText = (EditText) findViewById(R.id.editText4);
+		String repCountString = repCountText.getText().toString();
+		String repWeightString = repWeightText.getText().toString();
+		if (!repCountString.matches("") && !repWeightString.matches("")){
+			int setCount = Integer.parseInt(repCountString);
+			int setWeight = Integer.parseInt(repWeightString);
+			exerciseRepCount = exercise.getRepCountList();
+			exerciseRepWeight = exercise.getRepWeightList();
+			exerciseRepCount.add(setCount);
+			exerciseRepWeight.add(setWeight);
+			repCountText.setText("0");
+			repWeightText.setText("0");
 		}
+	}
+	public void editSets(View v){
+		//If they want to edit the sets for this exercise show them the list and let them change the elements
 	}
 
 }

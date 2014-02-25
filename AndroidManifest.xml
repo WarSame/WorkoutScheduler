@@ -58,6 +58,38 @@
             android:name="com.graeme.workoutscheduler.EditExercise"
             android:label="@string/title_activity_edit_exercise" >
         </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.EditSets"
+            android:label="@string/title_activity_edit_sets" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.AddSet"
+            android:label="@string/title_activity_add_set" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.RemoveSet"
+            android:label="@string/title_activity_remove_set" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.RemoveExercise"
+            android:label="@string/title_activity_remove_exercise" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.RejectExercise"
+            android:label="@string/title_activity_reject_exercise" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.SubmitExercise"
+            android:label="@string/title_activity_submit_exercise" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.RejectSet"
+            android:label="@string/title_activity_reject_set" >
+        </activity>
+        <activity
+            android:name="com.graeme.workoutscheduler.SubmitSet"
+            android:label="@string/title_activity_submit_set" >
+        </activity>
     </application>
 
 </manifest>

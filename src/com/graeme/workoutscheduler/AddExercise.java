@@ -11,9 +11,12 @@ import android.widget.EditText;
 public class AddExercise extends Activity {
 	private Workout workout = new Workout();
 	private Exercise exercise = new Exercise();
-	private ArrayList<Exercise> exerciseList = workout.getExerciseList();
-	private ArrayList<Integer> exerciseRepCount = exercise.getRepCountList();
-	private ArrayList<Integer> exerciseRepWeight = exercise.getRepWeightList();
+	private ArrayList<Exercise> exerciseList = new ArrayList<Exercise>();
+	String originalExerciseName;
+	EditText exerciseNameText;
+	EditText exerciseDescriptionText;
+	int originalIndex = -1;
+	String type = "";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,6 +25,11 @@ public class AddExercise extends Activity {
 		if (bundle != null){
 			Workout workoutPass = (Workout) bundle.getSerializable("workout");
 			Exercise exercisePass = (Exercise) bundle.getSerializable("exercise");
+			String typePass = bundle.getString("type");
+			originalIndex = bundle.getInt("index");
+			if (typePass != null){
+				type = typePass;
+			}
 			if (workoutPass != null){
 				workout = workoutPass;
 			}
@@ -29,6 +37,12 @@ public class AddExercise extends Activity {
 				exercise = exercisePass;
 			}
 		}
+		exerciseNameText = (EditText) findViewById(R.id.editText1);
+		exerciseDescriptionText = (EditText)findViewById(R.id.editText2);
+		
+		exerciseNameText.setText(exercise.getExerciseName());
+		exerciseDescriptionText.setText(exercise.getExerciseDescription());
+		originalExerciseName = exercise.getExerciseName();
 	}
 
 	@Override
@@ -38,26 +52,63 @@ public class AddExercise extends Activity {
 		return true;
 	}
 	
+	public void removeExercise(View v){		
+		Intent removeExerciseIntent = new Intent(this, RemoveExercise.class);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("workout", workout);
+		bundle.putString("original", originalExerciseName);
+		removeExerciseIntent.putExtras(bundle);
+		startActivity(removeExerciseIntent);
+	}
+	
 	public void submitExercise(View v){
 		//If they hit the submit button put the exercise in their workout and return them.
 		Bundle bundle = new Bundle();
-		Intent submitExerciseIntent = new Intent(this, EditExercise.class);
-		exercise.setRepCountList(exerciseRepCount);
-		exercise.setRepWeightList(exerciseRepWeight);
 		
 		EditText exerciseNameText = (EditText) findViewById(R.id.editText1);
 		EditText exerciseDescriptionText = (EditText)findViewById(R.id.editText2);
 		String exerciseName = exerciseNameText.getText().toString();
 		String exerciseDescription = exerciseDescriptionText.getText().toString();
 		
-		exerciseNameText.setText(exercise.getExerciseName());
-		exerciseDescriptionText.setText(exercise.getExerciseDescription());
 		exercise.setExerciseName(exerciseName);
-		exercise.setExerciseName(exerciseDescription);
+		exercise.setExerciseDescription(exerciseDescription);
 		exerciseList = workout.getExerciseList();
-		exerciseList.add(exercise);
+		//Check if the exercise is already in this workout's exercise list
+		//If it is going to overwrite an old one don't let it be added.
+		//If it is overwriting itself let it be added.
+		Boolean exerciseExists = false;
+		for (int i =0; i<exerciseList.size();i++){
+			exerciseName = exerciseList.get(i).getExerciseName();
+			if (exerciseName.equals(exercise.getExerciseName())){
+				exerciseExists = true;
+			}
+			if (exerciseName.equals(originalExerciseName)){
+				originalIndex = i;
+			}
+		}
+		exerciseName = exercise.getExerciseName();
+
+		Intent submitExerciseIntent = new Intent(this, RejectExercise.class);
+		if (exerciseExists){
+			//If the location we are moving to is already occupied
+			//Check if it is the same as we are moving from
+			//If so, we overwrite
+			if (originalExerciseName.equals(exerciseName)){
+				exerciseList.set(originalIndex, exercise);
+				submitExerciseIntent = new Intent(this, SubmitExercise.class);
+			}
+			//If it is not the same, we do not do anything, to avoid an overwrite
+		} else {//If !exerciseExists
+			//If the location we are moving to is not occupied
+			//Then we occupy it. If our exercise existed beforehand, we remove it
+			if (type.equals("existing")){
+				exerciseList.remove(originalIndex);
+			}
+			//Otherwise, we just add the exercise to the list
+			exerciseList.add(exercise);
+			submitExerciseIntent = new Intent(this, SubmitExercise.class);
+		}
 		workout.setExerciseList(exerciseList);
-		
 		bundle.putSerializable("workout", workout);
 		submitExerciseIntent.putExtras(bundle);
 		startActivity(submitExerciseIntent);
@@ -70,25 +121,21 @@ public class AddExercise extends Activity {
 		returnEditWorkoutIntent.putExtras(bundle);
 		startActivity(returnEditWorkoutIntent);
 	}
-	public void addSet(View v){
-		//If they hit the add set button, add that rep count to the list.
-		EditText repCountText = (EditText) findViewById(R.id.editText3);
-		EditText repWeightText = (EditText) findViewById(R.id.editText4);
-		String repCountString = repCountText.getText().toString();
-		String repWeightString = repWeightText.getText().toString();
-		if (!repCountString.matches("") && !repWeightString.matches("")){
-			int setCount = Integer.parseInt(repCountString);
-			int setWeight = Integer.parseInt(repWeightString);
-			exerciseRepCount = exercise.getRepCountList();
-			exerciseRepWeight = exercise.getRepWeightList();
-			exerciseRepCount.add(setCount);
-			exerciseRepWeight.add(setWeight);
-			repCountText.setText("0");
-			repWeightText.setText("0");
-		}
-	}
 	public void editSets(View v){
-		//If they want to edit the sets for this exercise show them the list and let them change the elements
+		//If they want to edit the sets for this exercise show them 
+		//the list and let them change the elements
+		EditText exerciseNameText = (EditText) findViewById(R.id.editText1);
+		EditText exerciseDescriptionText = (EditText)findViewById(R.id.editText2);
+		
+		Intent editSetsIntent = new Intent(this, EditSets.class);
+		Bundle bundle = new Bundle();
+		exercise.setExerciseDescription(exerciseDescriptionText.getText().toString());
+		exercise.setExerciseName(exerciseNameText.getText().toString());
+		
+		bundle.putSerializable("workout",workout);
+		bundle.putSerializable("exercise", exercise);
+		editSetsIntent.putExtras(bundle);
+		startActivity(editSetsIntent);
 	}
 
 }

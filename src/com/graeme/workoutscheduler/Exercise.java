@@ -7,26 +7,18 @@ public class Exercise implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String exerciseName;
 	private String exerciseDescription;
-	private ArrayList<Integer> repCountList;
-	private ArrayList<Integer> repWeightList;
+	private ArrayList<Set> repList;
 	
 	public Exercise(){
-		exerciseName = "No Exercise Name";
-		exerciseDescription = "No Description Given.";
-		repCountList = new ArrayList<Integer>();
-		repWeightList = new ArrayList<Integer>();
+		exerciseName = "No Name";
+		exerciseDescription = "N/A";
+		repList = new ArrayList<Set>();
 	}
-	public ArrayList<Integer> getRepWeightList() {
-		return repWeightList;
+	public ArrayList<Set> getRepList() {
+		return repList;
 	}
-	public void setRepWeightList(ArrayList<Integer> repWeightList) {
-		this.repWeightList = repWeightList;
-	}
-	public ArrayList<Integer> getRepCountList() {
-		return repCountList;
-	}
-	public void setRepCountList(ArrayList<Integer> repCountList) {
-		this.repCountList = repCountList;
+	public void setRepList(ArrayList<Set> repList) {
+		this.repList = repList;
 	}
 	public Exercise(String name, String description){
 		exerciseName = name;

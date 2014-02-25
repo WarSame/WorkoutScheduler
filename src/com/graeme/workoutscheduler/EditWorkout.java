@@ -19,6 +19,7 @@ public class EditWorkout extends Activity {
 	EditText descriptionText;
 	EditText setRestText;
 	EditText exerciseRestText;
+	String fileName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class EditWorkout extends Activity {
 		descriptionText.setText(workout.getWorkoutDescription());
 		setRestText.setText(""+workout.getSetRestTime());
 		exerciseRestText.setText(""+workout.getExerciseRestTime());
+		//Store the original name in order to allow for overwrites without overwriting other files
+		fileName = workout.getWorkoutName();
 	}
 
 	@Override
@@ -67,11 +70,10 @@ public class EditWorkout extends Activity {
 		workout.setSetRestTime(Integer.parseInt(setRestText.getText().toString()));
 		workout.setExerciseRestTime(Integer.parseInt(exerciseRestText.getText().toString()));
 		File fileLocation = new File(getFilesDir()+"/"+workout.getWorkoutName());
-		String workoutType = getIntent().getStringExtra("type");
-		//Deny them if they choose an existing workout name.
+		//Deny them if they choose an existing workout name other than their own if it exists.
 		//If they want to overwrite a file they need to delete it and create a new one
 		//Or just edit it.
-		if (workoutType.equals("new")&&fileLocation.exists()){
+		if (!fileName.equals(workout.getWorkoutName())&&fileLocation.exists()){
 			Intent rejectWorkoutIntent = new Intent(this, RejectWorkout.class);
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("workout", workout);

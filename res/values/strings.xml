@@ -44,5 +44,21 @@
     <string name="repWeightNoCol">Rep Weight</string>
     <string name="removeExercise">Remove Exercise</string>
     <string name="editSets">Edit Sets</string>
+    <string name="title_activity_edit_sets">EditSets</string>
+    <string name="newSet">New Set</string>
+    <string name="title_activity_add_set">AddSet</string>
+    <string name="removeSet">Remove Set</string>
+    <string name="title_activity_remove_set">RemoveSet</string>
+    <string name="title_activity_remove_exercise">RemoveExercise</string>
+    <string name="title_activity_reject_exercise">RejectExercise</string>
+    <string name="title_activity_submit_exercise">SubmitExercise</string>
+    <string name="title_activity_reject_set">RejectSet</string>
+    <string name="title_activity_submit_set">SubmitSet</string>
+    <string name="setAccepted">Set Accepted</string>
+    <string name="removeSetConfirm">Remove This Set?</string>
+    <string name="removeExerciseConfirm">Remove This Exercise?</string>
+    <string name="workoutAccepted">Workout Accepted</string>
+    <string name="exerciseAccepted">Exercise Accepted</string>
+    <string name="exerciseRejected">Exercise Rejected</string>
 
 </resources>
